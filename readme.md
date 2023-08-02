@@ -1,0 +1,11 @@
+Proyecto de Analisis de Datos de peliculas de Hollywood (2007-2013)
+Integrantes: Cristian Cerillano y Ulises Fritz Serain 
+
+Preguntas a investigar: 
+QUE GENERO/ESTUDIO ES EL MAS TAQUILLERO/MAS INVIERTE/ 
+ESTUDIO CON MAS PRESUPUESTO/exito/
+MEJORES CRITICAS ENTRE ROTTEN TOMATOES Y AUDIENCIA (GRAFICO)
+DIFERENCIA ENTRE MEJOR PELICULA Y PEOR ( nos podemos basar en puntuacion o recaudacion)
+EJEMPLO DE MUCHO EXITO CON POCO PRESUPUESTO Y VICEVERSA. 
+COMPARACION DE SI GANAN MAS NACIONALMENTE O CON LAS VENTAS AL EXTRANJERO.
+SEGUIMIENTO DE GANANCIA POR AÑO (podemos nombrar el mas exitoso y el menos).
