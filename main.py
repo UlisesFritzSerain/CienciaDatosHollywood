@@ -23,6 +23,16 @@ peliculasEstudiosTop10 = dfMoviesFinal[dfMoviesFinal["LeadStudio"].isin(nombreEs
 #print(peliculasEstudiosTop10)
 gananciasEstudios = peliculasEstudiosTop10.groupby('LeadStudio')['Profitability'].sum() # ganancia de cada estudio (total profitability)
 gananciaPromedio= gananciasEstudios/estudios  #prodemdio de ganancias
+#BUDGET PROMEDIO:
+BudgetStudios = peliculasEstudiosTop10.groupby('LeadStudio')['Budget'].sum() # estudio con mas presupuesto
+BudgetStudiosPromedio= BudgetStudios/estudios
+BudgetEstudio=BudgetStudiosPromedio.index
+plt.barh(BudgetEstudio,BudgetStudiosPromedio, color='orange')
+plt.ylabel('Estudios')
+plt.xlabel('Presupuesto')
+plt.title('Cantidad promedio invertida por los estudios')
+plt.show()
+
 
 #GANANCIA PROMEDIO ESTUDIOS TOP 10
 nombreEstudio=gananciaPromedio.index
@@ -32,15 +42,6 @@ plt.xlabel('Ganancia Bruta mundial en porcentaje del presupuesto')
 plt.title('Estudio de la ganancia de los 10 estudios de Hollywood mas importantes entre 2007 y 2012')
 plt.show()
 
-#BUDGET PROMEDIO:
-BudgetStudios = peliculasEstudiosTop10.groupby('LeadStudio')['Budget'].sum() # estudio con mas presupuesto
-BudgetStudiosPromedio= BudgetStudios/estudios
-BudgetEstudio=BudgetStudiosPromedio.index
-plt.barh(BudgetEstudio,BudgetStudiosPromedio, color='orange')
-plt.ylabel('Estudios')
-plt.xlabel(' Busget')
-plt.title('Cantidad promedio invertida por los estudios')
-plt.show()
 
 #COMPARACION DE ESTUDIOS A NIVEL PRESUPUESTO/EXITO
 budget_ganancia_estudios_top10 = peliculasEstudiosTop10.groupby('LeadStudio').agg({'Budget': 'mean', 'WorldGross': 'mean'})
@@ -70,11 +71,18 @@ plt.title('Valoracion de la audiencia y Rotten Tomatoes')
 plt.legend(fontsize = 'small')
 plt.show()
 
-
+# PROMEDIO DE LOS ESTUDIOS MAS TAQUILLEROS EN EL PRIMER FIN DE SEMANA
 TaquilleraEstudios = peliculasEstudiosTop10.groupby('LeadStudio')['OpeningWeekend'].sum() # mas taquillera de cada estudio (total)
 #print(TaquilleraEstudios.sort_values(ascending=False))
 TaquilleraPromedio= TaquilleraEstudios/estudios  #prodemdio de taquillera
 #print(TaquilleraPromedio.sort_values(ascending=False))
+NombreTaquilleraEstudios=TaquilleraPromedio.index
+plt.barh(NombreTaquilleraEstudios,TaquilleraPromedio, color='purple')
+plt.ylabel('Estudios')
+plt.xlabel(' Ganancia')
+plt.title('Cantidad promedio recaudada en la semana de estreno')
+plt.show()
+
 DomesticEstudios = peliculasEstudiosTop10.groupby('LeadStudio')['DomesticGross'].sum() # cant generada localmente de cada estudio (total)
 DomesticPromedio= DomesticEstudios/estudios  #prodemdio de la cant generada localmente
 ExtranjeroEstudios = peliculasEstudiosTop10.groupby('LeadStudio')['ForeignGross'].sum() # cant generada en el extrangero de cada estudio (total)
@@ -102,7 +110,7 @@ print("Estudio con mayor ganancia en EEUU que en el extranjero:")
 print(estudio_mayor_diferencia_local)
 peliculas_estudio_mayor_diferencia = dfMoviesFinal[dfMoviesFinal['LeadStudio'] == estudio_mayor_diferencia_local]
 
-#Buscamos el mayor exito medido al presupuesto. 
+#Buscamos el mayor exito (pelicula) medido al presupuesto. 
 plt.figure(figsize=(10, 6))
 sns.scatterplot(x='Budget', y='WorldGross', size='WorldGross', hue='WorldGross', data=dfMoviesFinal, alpha=0.7)
 
@@ -137,5 +145,17 @@ plt.title('Puntajes Promedio por Género (Audiencia vs. RottenTomatoes)')
 plt.xticks(rotation=90)
 plt.legend(['Audiencia', 'RottenTomatoes'])
 plt.tight_layout()
+plt.show()
+
+#GENERO MAS RENTABLE A NIVEL ECONOMICO
+PeliculaGenero= dfMoviesFinal["Genre"].value_counts()
+generoRentable= dfMoviesFinal.groupby('Genre')['Profitability'].sum()
+generoRentablePromedio= generoRentable/ PeliculaGenero
+
+Generos = generoRentablePromedio.index
+plt.barh(Generos,generoRentablePromedio, color= 'green')
+plt.ylabel('Generos')
+plt.xlabel(' Porcentaje de ganancia')
+plt.title('Ganancia promedio de cada genero')
 plt.show()
 # %%
