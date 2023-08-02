@@ -1,8 +1,9 @@
 # %%
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-# QUE GENERO/ESTUDIO ES EL MAS TAQUILLERO/MAS INVIERTE/
+# QUE GENERO/ESTUDIO ES EL MAS TAQUILLERO/MAS INVIERTE/ 
 # ESTUDIO CON MAS PRESUPUESTO/exito/
 # MEJORES CRITICAS ENTRE ROTTEN TOMATOES Y AUDIENCIA (GRAFICO)
 # DIFERENCIA ENTRE MEJOR PELICULA Y PEOR ( nos podemos basar en puntuacion o recaudacion)
@@ -53,10 +54,10 @@ DomesticEstudios = peliculasEstudiosTop10.groupby('LeadStudio')['DomesticGross']
 #print(DomesticEstudios.sort_values(ascending=False))
 DomesticPromedio= DomesticEstudios/estudios  #prodemdio de la cant generada localmente
 #print(DomesticPromedio.sort_values(ascending=False))
-ExtrangeroEstudios = peliculasEstudiosTop10.groupby('LeadStudio')['ForeignGross'].sum() # cant generada en el extrangero de cada estudio (total)
-#print(ExtrangeroEstudios.sort_values(ascending=False))
-ExtrangeroPromedio= ExtrangeroEstudios/estudios  #prodemdio de la cant generada en el extrangero
-#print(ExtrangeroPromedio.sort_values(ascending=False))
+ExtranjeroEstudios = peliculasEstudiosTop10.groupby('LeadStudio')['ForeignGross'].sum() # cant generada en el extrangero de cada estudio (total)
+#print(ExtranjeroEstudios.sort_values(ascending=False))
+ExtranjeroPromedio= ExtranjeroEstudios/estudios  #prodemdio de la cant generada en el extranjero
+#print(ExtranjeroPromedio.sort_values(ascending=False))
 
 # ganancia promedio
 nombreEstudio=gananciaPromedio.index
@@ -76,13 +77,31 @@ plt.legend()
 plt.show()
 
 # cuanto se genera adentro y afuera
-plt.barh(nombreEstudio, ExtrangeroPromedio, color='green', label='Extragera')
+plt.barh(nombreEstudio, ExtranjeroPromedio, color='green', label='Extranjera')
 plt.barh(nombreEstudio, DomesticPromedio, color='red', label='Local', alpha=0.7)
 plt.xlabel('Ganancia (Millones)')
 plt.ylabel('estudios')
-plt.title('Ganancia generada en el extrangero y localmente')
+plt.title('Ganancia generada en el extranjero y localmente')
 plt.legend()
 plt.show()
 
+
+#Buscamos el mayor exito medido al presupuesto. 
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='Budget', y='WorldGross', size='WorldGross', hue='WorldGross', data=dfMoviesFinal, alpha=0.7)
+#linea de tendencia
+sns.regplot(x='Budget', y='WorldGross', data=dfMoviesFinal, scatter=False, ci=None)
+plt.xlabel('Presupuesto (Millones)')
+plt.ylabel('Ingresos Mundiales (Millones)')
+plt.title('Relación entre Presupuesto e Ingresos Mundiales de Películas')
+plt.show()
+
+peliMasGanadora = dfMoviesFinal[dfMoviesFinal['WorldGross'] == dfMoviesFinal['WorldGross'].max()]
+print(peliMasGanadora[["Movie",'WorldGross']])
+peliCalidadPrecio =  dfMoviesFinal[
+    (dfMoviesFinal['WorldGross'] >= 1000) & (dfMoviesFinal['WorldGross'] <= 1500) &
+    (dfMoviesFinal['Budget'] >= 100) & (dfMoviesFinal['Budget'] <= 150)
+]
+print(peliCalidadPrecio[["Movie", "WorldGross", "Budget"]]) #Segunda de mas ganancia sin estar en el top 20 de presupuestos.
 
 # %%
