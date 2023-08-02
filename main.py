@@ -1,16 +1,19 @@
 # %%
 import pandas as pd
+import tkinter as tk
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import grafica 
 
 df = pd.read_csv("HollywoodMovies.csv")
 #Borramos las peliculas que no poseian genero. (ibamos a sacar historia pero al sacar genero el dato quedo bastante completo).
 dfMoviesFinal = df.dropna(subset=['Genre'])
 
 #TOP 10 peliculas de OpeningWeekend Taquilleras
-primerSemana = dfMoviesFinal.sort_values(by="OpeningWeekend", ascending=False)
-top10Estreno = primerSemana.head(10)
+primerSemana1 = dfMoviesFinal.sort_values(by="OpeningWeekend", ascending=False)
+primerSemana = dfMoviesFinal.sort_values(by="OpeningWeekend", ascending=True)
+top10Estreno = primerSemana1.head(10)
+notTop10Estreno = primerSemana.head(10)
 print("Peliculas con mayor exito en el fin de semana de estreno")
 print(top10Estreno[["Movie","OpeningWeekend"]])
 
